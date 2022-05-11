@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     print_r($observacao = $_POST['observacao']);
     */
 
-    include_once('config.php');
+    include_once('./config.php');
 
     $nome = $_POST['nome'];
     $data_nasc = $_POST['data_nascimento'];
@@ -29,14 +29,14 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<script src="../js/verificaCPF.js"></script>
+<script src="./js/verificaCPF.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro NewM</title>
-    <link rel="stylesheet" href="../css/cadastro.css" type="text/css">
+    <link rel="stylesheet" href="./css/cadastro.css" type="text/css">
 </head>
 
 <body>
