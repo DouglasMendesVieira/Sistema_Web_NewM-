@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once('config.php');
 //print_r($_SESSION);
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
@@ -7,6 +8,12 @@ if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true
     header('Location: login.php');
 }
 $logado = $_SESSION['email'];
+
+$sql = "SELECT * FROM usuarios ORDER BY id ASC";
+
+$result = $conexao->query($sql);
+
+//print_r($result);
 ?>
 
 <!DOCTYPE html>
@@ -18,9 +25,28 @@ $logado = $_SESSION['email'];
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/sistema.css" type="text/css">
     <title>Sistema Web NewM</title>
 </head>
+<style>
+body {
+    background-image: linear-gradient(45deg, cyan, blue);
+    color: white;
+    text-align: center;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.table-bg {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px 15px 0 0;
+}
+</style>
 
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -39,6 +65,40 @@ $logado = $_SESSION['email'];
     <?php
     echo "<h1>Bem vindo <u>$logado</u></h1>";
     ?>
+    <div class="m-5">
+        <table class="table text-white table-bg">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Data de Nascimento</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">Celular</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col">Observação</th>
+                    <th scope="col">...</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                while ($user_data = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<td>" . $user_data['id'] . "</td>";
+                    echo "<td>" . $user_data['nome'] . "</td>";
+                    echo "<td>" . $user_data['data_nasc'] . "</td>";
+                    echo "<td>" . $user_data['cpf'] . "</td>";
+                    echo "<td>" . $user_data['celular'] . "</td>";
+                    echo "<td>" . $user_data['email'] . "</td>";
+                    echo "<td>" . $user_data['endereco'] . "</td>";
+                    echo "<td>" . $user_data['observacao'] . "</td>";
+                    echo "<td>açoes</td>";
+                    echo "<tr>";
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

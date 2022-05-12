@@ -32,15 +32,128 @@ if (isset($_POST['submit'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-<script src="./js/verificaCPF.js"></script>
+<script src="./verificaCPF.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastro NewM</title>
-    <link rel="stylesheet" href="./css/cadastro.css" type="text/css">
 </head>
+<style>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(45deg, cyan, blue);
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+fieldset {
+    border: 3px solid dodgerblue;
+}
+
+legend {
+    border: 1px solid dodgerblue;
+    padding: 10px;
+    text-align: center;
+    background-color: dodgerblue;
+    border-radius: 8px;
+}
+
+input:invalid {
+    border-color: red;
+}
+
+input:valid {
+    border-color: green;
+}
+
+.box {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    width: 30%;
+}
+
+.inputBox {
+    position: relative;
+}
+
+.inputUser {
+    background: none;
+    border: none;
+    border-bottom: 5px solid white;
+    outline: none;
+    color: white;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.textarea {
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.labelInput {
+    position: relative;
+    top: -50px;
+    pointer-events: none;
+    color: dodgerblue;
+    font-size: 15px;
+}
+
+.labelObservacao {
+    color: dodgerblue;
+    font-size: 15px;
+}
+
+.labelNascimento {
+    position: relative;
+    pointer-events: none;
+    color: dodgerblue;
+    font-size: 15px;
+}
+
+#data_nascimento {
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+}
+
+#submit {
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: deepskyblue;
+}
+
+#submit:hover {
+    background-color: dodgerblue;
+    cursor: pointer;
+}
+</style>
 
 <body>
     <a href="home.php">Voltar</a>
