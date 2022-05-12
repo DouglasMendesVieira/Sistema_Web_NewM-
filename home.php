@@ -10,7 +10,8 @@
 <style>
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: linear-gradient(45deg, cyan, blue);
+    background-image: linear-gradient(0deg, cyan, blue);
+    background-attachment: fixed;
     text-align: center;
     color: white;
 }
@@ -40,8 +41,10 @@ button:hover {
 
 <body>
     <div class="box">
-        <a href="login.php" class="button">Login</a>
-        <a href="cadastro.php" class="button">Cadastre-se</a>
+        <h1>Sistema Web NewM</h1><br>
+        <a href="sistema.php" class="button">Lista de clientes cadastrados</a>
+        <br><br><br>
+        <a href="cadastro.php" class="button">Cadastrar novo cliente</a>
     </div>
 </body>
 

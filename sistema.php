@@ -1,5 +1,4 @@
 <?php
-session_start();
 include_once('config.php');
 
 $pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
@@ -15,15 +14,6 @@ $pagina_atual = filter_input(INPUT_GET, 'pagina', FILTER_SANITIZE_NUMBER_INT);
 $pagina = (!empty($pagina_atual)) ? $pagina_atual : 1;
 //calcular inicio da visualização
 $inicio = ($quantidade_pg * $pagina) - $quantidade_pg;
-
-
-//print_r($_SESSION);
-if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
-    unset($_SESSION['email']);
-    unset($_SESSION['senha']);
-    header('Location: login.php');
-}
-$logado = $_SESSION['email'];
 
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
@@ -50,7 +40,9 @@ $result = $conexao->query($sql);
 </head>
 <style>
 body {
-    background-image: linear-gradient(45deg, cyan, blue);
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(0deg, cyan, blue);
+    background-attachment: fixed;
     color: white;
     text-align: center;
 }
@@ -75,7 +67,7 @@ body {
 </style>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Sistema Web NewM</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -84,13 +76,9 @@ body {
             </button>
         </div>
         <div class="d-flex">
-            <a href="sair.php" class="btn btn-danger me-3">Sair</a>
+            <a href="home.php" class="btn btn-danger me-3">Voltar</a>
         </div>
     </nav>
-    <br>
-    <?php
-    echo "<h1>Bem vindo <u>$logado</u></h1>";
-    ?>
     <br>
     <div class="box-search">
         <input type="search" class="form-control w-25" placeholder="Pesquisar" id="pesquisar">
@@ -152,7 +140,7 @@ body {
         $pagina_posterior = $pagina + 1;
         ?>
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
+            <ul class="pagination justify-content-center">
                 <li class="page-item">
                     <?php
                     if ($pagina_anterior != 0) { ?>

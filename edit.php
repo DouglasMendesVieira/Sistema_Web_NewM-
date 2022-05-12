@@ -12,7 +12,6 @@ if (!empty($_GET['id'])) {
     if ($result->num_rows > 0) {
         while ($user_data = mysqli_fetch_assoc($result)) {
             $nome = $user_data['nome'];
-            $senha = $user_data['senha'];
             $data_nasc = $user_data['data_nasc'];
             $cpf = $user_data['cpf'];
             $celular = $user_data['celular'];
@@ -33,6 +32,25 @@ if (!empty($_GET['id'])) {
 <!DOCTYPE html>
 <html lang="en">
 <script src="./verificaCPF.js"></script>
+<script src="./jquery-3.6.0.min.js"></script>
+<script src="./jquery.mask.js"></script>
+<script>
+$(document).ready(function() {
+    $('#cpf').mask('000.000.000-00', {
+        reverse: true
+    });
+    var SPMaskBehavior = function(val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+
+    $('#celular').mask(SPMaskBehavior, spOptions);
+})
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -43,7 +61,8 @@ if (!empty($_GET['id'])) {
 <style>
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: linear-gradient(45deg, cyan, blue);
+    background-image: linear-gradient(0deg, cyan, blue);
+    background-attachment: fixed;
 }
 
 html,
@@ -91,11 +110,10 @@ input:valid {
 }
 
 .inputUser {
-    background: none;
     border: none;
     border-bottom: 5px solid white;
     outline: none;
-    color: white;
+    color: black;
     font-size: 15px;
     width: 100%;
     letter-spacing: 1px;
@@ -153,24 +171,40 @@ input:valid {
     background-color: dodgerblue;
     cursor: pointer;
 }
+
+.voltar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #DC3545;
+    margin: 10px;
+    height: 40px;
+    width: 65px;
+    padding: 0 7px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
 </style>
 
 <body>
-    <a href="sistema.php">Voltar</a>
+    <button class="voltar"><a href="sistema.php">Voltar</a></button>
     <div class="box">
         <form action="saveEdit.php" method="POST">
             <fieldset>
-                <legend><b>Cadastro de Clientes</b></legend>
+                <legend><b>Editar cliente</b></legend>
                 <br><br>
                 <div class="inputBox">
                     <input type="text" name="nome" id="nome" class="inputUser"
                         pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" value="<?php echo $nome ?>" required>
                     <label for="nome" class="labelInput">Nome completo</label>
-                </div><br>
-                <div class="inputBox">
-                    <input type="password" name="senha" id="senha" class="inputUser" value="<?php echo $senha ?>"
-                        required>
-                    <label for="senha" class="labelInput">Senha</label>
                 </div>
                 <label for="data_nascimento" class="labelNascimento">Data de nascimento:</label>
                 <input type="date" name="data_nascimento" id="data_nascimento" value="<?php echo $data_nasc ?>"
@@ -198,7 +232,7 @@ input:valid {
                 <div class="inputBox">
                     <label for="observacao" class="labelObservacao"
                         value="<?php echo $observacao ?>">Observação</label><br><br>
-                    <textarea name="observacao" id="observacao" class="textarea" rows="3" cols="20" maxlength="300"
+                    <textarea name="observacao" id="observacao" class="textarea" rows="4" cols="20" maxlength="300"
                         style="resize: none"> </textarea>
                 </div><br>
                 <input type="hidden" name="id" value="<?php echo $id ?>">

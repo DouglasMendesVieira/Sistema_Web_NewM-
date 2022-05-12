@@ -15,7 +15,6 @@ if (isset($_POST['submit'])) {
     include_once('./config.php');
 
     $nome = $_POST['nome'];
-    $senha = $_POST['senha'];
     $data_nasc = $_POST['data_nascimento'];
     $cpf = $_POST['cpf'];
     $celular = $_POST['celular'];
@@ -23,16 +22,35 @@ if (isset($_POST['submit'])) {
     $endereco = $_POST['endereco'];
     $observacao = $_POST['observacao'];
 
-    $result = mysqli_query($conexao, "INSERT INTO usuarios(nome,senha,data_nasc,cpf,celular,email,endereco,observacao) 
-    VALUES ('$nome','$senha','$data_nasc','$cpf','$celular','$email','$endereco','$observacao')");
+    $result = mysqli_query($conexao, "INSERT INTO usuarios(nome,data_nasc,cpf,celular,email,endereco,observacao) 
+    VALUES ('$nome','$data_nasc','$cpf','$celular','$email','$endereco','$observacao')");
 
-    header('Location: login.php');
+    header('Location: sistema.php');
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <script src="./verificaCPF.js"></script>
+<script src="./jquery-3.6.0.min.js"></script>
+<script src="./jquery.mask.js"></script>
+<script>
+$(document).ready(function() {
+    $('#cpf').mask('000.000.000-00', {
+        reverse: true
+    });
+    var SPMaskBehavior = function(val) {
+            return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+        },
+        spOptions = {
+            onKeyPress: function(val, e, field, options) {
+                field.mask(SPMaskBehavior.apply({}, arguments), options);
+            }
+        };
+
+    $('#celular').mask(SPMaskBehavior, spOptions);
+})
+</script>
 
 <head>
     <meta charset="UTF-8">
@@ -43,7 +61,8 @@ if (isset($_POST['submit'])) {
 <style>
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-image: linear-gradient(45deg, cyan, blue);
+    background-image: linear-gradient(0deg, cyan, blue);
+    background-attachment: fixed;
 }
 
 html,
@@ -91,11 +110,10 @@ input:valid {
 }
 
 .inputUser {
-    background: none;
     border: none;
-    border-bottom: 5px solid white;
+    border-bottom: 3px solid white;
     outline: none;
-    color: white;
+    color: black;
     font-size: 15px;
     width: 100%;
     letter-spacing: 1px;
@@ -153,30 +171,46 @@ input:valid {
     background-color: dodgerblue;
     cursor: pointer;
 }
+
+.voltar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #DC3545;
+    margin: 10px;
+    height: 40px;
+    width: 65px;
+    padding: 0 7px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
 </style>
 
 <body>
-    <a href="home.php">Voltar</a>
+    <button class="voltar"><a href="home.php">Voltar</a></button>
     <div class="box">
         <form action="cadastro.php" method="POST">
             <fieldset>
-                <legend><b>Cadastro de Clientes</b></legend>
+                <legend><b>Cadastrar novo cliente</b></legend>
                 <br><br>
                 <div class="inputBox">
                     <input type="text" name="nome" id="nome" class="inputUser"
                         pattern="[A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+$" required>
                     <label for="nome" class="labelInput">Nome completo</label>
-                </div><br>
-                <div class="inputBox">
-                    <input type="password" name="senha" id="senha" class="inputUser" required>
-                    <label for="senha" class="labelInput">Senha</label>
                 </div>
                 <label for="data_nascimento" class="labelNascimento">Data de nascimento:</label>
                 <input type="date" name="data_nascimento" id="data_nascimento" required>
                 <br><br><br>
                 <div class="inputBox">
-                    <input type="text" name="cpf" id="cpf" class="inputUser" required maxlength="14"
-                        onblur="validarCPF(this)">
+                    <input type="text" name="cpf" id="cpf" class="inputUser" required onblur="validarCPF(this)">
                     <label for="cpf" class="labelInput">CPF</label>
                 </div><br>
                 <div class="inputBox">
@@ -193,7 +227,7 @@ input:valid {
                 </div>
                 <div class="inputBox">
                     <label for="observacao" class="labelObservacao">Observação</label><br><br>
-                    <textarea name="observacao" id="observacao" class="textarea" rows="3" cols="20" maxlength="300"
+                    <textarea name="observacao" id="observacao" class="textarea" rows="4" cols="20" maxlength="300"
                         style="resize: none"> </textarea>
                 </div><br>
                 <input type="submit" name="submit" id="submit">
