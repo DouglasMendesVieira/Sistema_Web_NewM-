@@ -1,6 +1,22 @@
 <?php
 session_start();
 include_once('config.php');
+
+$pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
+$result_cadastro = "SELECT * FROM usuarios";
+$result_cadastros = mysqli_query($conexao, $result_cadastro);
+
+$total_cadastros = mysqli_num_rows($result_cadastros);
+$quantidade_pg = 10;
+$num_paginas = ceil($total_cadastros / $quantidade_pg);
+
+//redeber a pagina, o numero da pagina
+$pagina_atual = filter_input(INPUT_GET, 'pagina', FILTER_SANITIZE_NUMBER_INT);
+$pagina = (!empty($pagina_atual)) ? $pagina_atual : 1;
+//calcular inicio da visualização
+$inicio = ($quantidade_pg * $pagina) - $quantidade_pg;
+
+
 //print_r($_SESSION);
 if ((!isset($_SESSION['email']) == true) and (!isset($_SESSION['senha']) == true)) {
     unset($_SESSION['email']);
@@ -11,9 +27,9 @@ $logado = $_SESSION['email'];
 
 if (!empty($_GET['search'])) {
     $data = $_GET['search'];
-    $sql = "SELECT * FROM usuarios WHERE nome LIKE '%$data%' or email LIKE '%$data%' ORDER BY id ASC";
+    $sql = "SELECT * FROM usuarios WHERE nome LIKE '%$data%' or email LIKE '%$data%' ORDER BY id ASC LIMIT $inicio, $quantidade_pg";
 } else {
-    $sql = "SELECT * FROM usuarios ORDER BY id ASC";
+    $sql = "SELECT * FROM usuarios ORDER BY id ASC LIMIT $inicio, $quantidade_pg";
 }
 
 $result = $conexao->query($sql);
@@ -130,6 +146,44 @@ body {
                 ?>
             </tbody>
         </table>
+        <?php
+        //verificar pagina anterior e posterior
+        $pagina_anterior = $pagina - 1;
+        $pagina_posterior = $pagina + 1;
+        ?>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <?php
+                    if ($pagina_anterior != 0) { ?>
+                    <a class="page-link" href="sistema.php?pagina=<?php echo $pagina_anterior; ?>"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                    <?php } else { ?>
+                    <span aria-hidden="true">&laquo;</span>
+                    <?php } ?>
+                </li>
+                <?php
+                //apresentar a paginação
+                for ($i = 1; $i < $num_paginas + 1; $i++) { ?>
+                <li class="page-item"><a class="page-link"
+                        href="sistema.php?pagina=<?php echo $i ?>"><?php echo $i ?></a></li>
+                <?php }
+                ?>
+                <li class="page-item">
+                    <?php
+                    if ($pagina_posterior <= $num_paginas) { ?>
+                    <a class="page-link" href="sistema.php?pagina=<?php echo $pagina_posterior; ?>"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                    <?php } else { ?>
+                    <span aria-hidden="true">&raquo;</span>
+                    <?php } ?>
+                </li>
+            </ul>
+        </nav>
     </div>
 </body>
 <script>
