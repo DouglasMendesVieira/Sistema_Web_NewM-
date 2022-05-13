@@ -1,6 +1,6 @@
 <?php
 // isset -> serve para saber se uma variável está definida
-include_once('config.php');
+include_once('../configs/config.php');
 if (isset($_POST['update'])) {
     $id = $_POST['id'];
     $nome = $_POST['nome'];
@@ -16,4 +16,4 @@ if (isset($_POST['update'])) {
     $result = $conexao->query($sqlUpdate);
     print_r($result);
 }
-header('Location: sistema.php');
+header('Location: ../html/sistema.php');

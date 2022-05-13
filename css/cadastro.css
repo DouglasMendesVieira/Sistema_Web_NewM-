@@ -1,0 +1,119 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: linear-gradient(0deg, cyan, blue);
+    background-attachment: fixed;
+}
+
+fieldset {
+    border: 3px solid dodgerblue;
+    border-radius: 8px;
+}
+
+legend {
+    border: 1px solid dodgerblue;
+    padding: 10px;
+    text-align: center;
+    background-color: dodgerblue;
+    border-radius: 8px;
+}
+
+.box {
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 15px;
+    border-radius: 15px;
+    width: 30%;
+}
+
+.inputBox {
+    position: relative;
+}
+
+.inputUser {
+    border-radius: 5px;
+    outline: none;
+    color: black;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.textarea {
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    width: 100%;
+    letter-spacing: 1px;
+}
+
+.labelInput {
+    position: absolute;
+    top: -20px;
+    left: 2px;
+    pointer-events: none;
+    color: dodgerblue;
+    transition: .5s;
+}
+
+.labelObservacao {
+    color: dodgerblue;
+    font-size: 15px;
+}
+
+.labelNascimento {
+    position: relative;
+    pointer-events: none;
+    color: dodgerblue;
+    font-size: 15px;
+    left: 2px;
+}
+
+#data_nascimento {
+    border: none;
+    padding: 8px;
+    border-radius: 5px;
+    outline: none;
+    font-size: 15px;
+}
+
+#submit {
+    width: 100%;
+    border: none;
+    padding: 15px;
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: deepskyblue;
+}
+
+#submit:hover {
+    background-color: dodgerblue;
+    cursor: pointer;
+}
+
+.voltar {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    background-color: #DC3545;
+    margin: 10px;
+    height: 40px;
+    width: 65px;
+    padding: 0 7px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}

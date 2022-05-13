@@ -1,7 +1,7 @@
 <?php
 if (!empty($_GET['id'])) {
 
-    include_once('./config.php');
+    include_once('../configs/config.php');
 
     $id = $_GET['id'];
 
@@ -14,4 +14,4 @@ if (!empty($_GET['id'])) {
         $resultDelete = $conexao->query($sqlDelete);
     }
 }
-header('Location: sistema.php');
+header('Location: ../html/sistema.php');
